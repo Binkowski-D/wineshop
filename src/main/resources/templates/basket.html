@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basket Details</title>
+    <link rel="stylesheet" href="/css/basket-style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap"
+            rel="stylesheet"
+    />
+</head>
+<body>
+<header>
+    <h1 class="header-contents">Koszyk</h1>
+</header>
+<main>
+    <div class="basket-content">
+        <div class="no-contents" th:if="${items.isEmpty()}">
+            <p>Brak produktów w koszyku</p>
+            <a href="/" class="button">Wróć do sklepu</a>
+        </div>
+        <div th:unless="${items.isEmpty()}">
+        <table>
+            <thead>
+            <tr>
+                <th></th>
+                <th>Produkt</th>
+                <th>Cena</th>
+                <th>Ilość</th>
+                <th>Kwota</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${items}">
+                <td>
+                    <form th:action="@{/basket/remove}" method="post">
+                        <input type="hidden" name="wineId" th:value="${item.wine.id}">
+                        <button type="submit">&times;</button>
+                    </form>
+                </td>
+
+                <td>
+                    <img th:src="@{'/' + ${item.wine.imagePath}}" th:alt="${item.wine.name}">
+                    <span th:text="${item.wine.name}"></span>
+                </td>
+                <td th:text="${item.wine.price + ' zł'}"></td>
+                <td>
+                    <form th:action="@{/basket/update}" method="post">
+                        <input type="hidden" name="wineIds" th:value="${item.wine.id}">
+                        <input type="number" name="quantities"
+                               th:value="${item.quantity}"
+                               th:min="1"
+                               th:max="${item.wine.quantity}"
+                               step="1">
+                        <button type="submit">Zaktualizuj</button>
+                    </form>
+                </td>
+                <td th:text="${item.price + ' zł'}"></td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    <div class="summary">
+        <div th:unless="${items.isEmpty()}">
+        <h2>Podsumowanie koszyka</h2>
+        <p>Kwota: <span th:text="${totalCost + ' zł'}"></span></p>
+        <a href="/" id="back" class="button">Wróć do sklepu</a>
+        <button class="button" disabled>Przejdź do płatności</button>
+    </div>
+    </div>
+</main>
+<footer>
+    <section class="logo">
+        <img src="assets/logo.jpeg" alt="Logo firmy" />
+    </section>
+    <section class="info">
+        <h3>Informacje</h3>
+        <p>Regulamin</p>
+        <p>Polityka prywatności</p>
+    </section>
+    <section class="contact-info">
+        <h3>Kontakt</h3>
+        <p>
+            <span class="material-symbols-outlined icon">location_on</span>ul.
+            Wymyślona 50, Warszawa
+        </p>
+        <p>
+          <span class="material-symbols-outlined icon">mail</span
+          >kontakt@wineshop.pl
+        </p>
+        <p>
+            <span class="material-symbols-outlined">smartphone</span> +48 123 456
+            789
+        </p>
+    </section>
+</footer>
+</body>
+</html>

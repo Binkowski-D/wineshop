@@ -1,0 +1,224 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+}
+
+nav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: black;
+  font-size: 2rem;
+}
+
+header {
+  display: grid;
+  width: 100%;
+  min-height: 30rem;
+  justify-items: center;
+  align-items: center;
+  background-image: url("/assets/grapes.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.header-contents {
+  color: white;
+  text-align: center;
+  font-family: "Roboto Slab", serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+h1 {
+  font-size: 5rem;
+}
+
+header p {
+  font-size: 1.5rem;
+  font-style: italic;
+}
+
+.first-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 10rem;
+  background-color: #f2f2f2;
+  min-height: 20rem;
+}
+
+.georgia-flag,
+.georgia-sign {
+  padding: 1rem;
+}
+
+.georgia-flag img,
+.georgia-sign img {
+  max-width: 100%;
+  height: auto;
+}
+
+.description {
+  flex: 1 1 auto;
+  padding: 1rem;
+  line-height: 1.6;
+  margin: 0 auto;
+}
+
+h2 {
+  font-size: 2rem;
+  text-align: center;
+  padding-bottom: 2rem;
+}
+
+.description p {
+  font-size: 1.2rem;
+  text-align: justify;
+  margin: 0 1rem;
+}
+
+.wine-details {
+  margin-top: 5rem;
+  display: flex;
+  max-width: 90%;
+  padding-left: 15%;
+}
+
+.error-message{
+    font-weight: bold;
+    font-size: 10rem;
+    text-align: center;
+}
+
+.wine-image {
+  max-width: 70%;
+  height: auto;
+}
+
+.wine-description h2 {
+  text-align: left;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
+#price {
+  font-size: 2rem;
+  font-style: italic;
+  padding-bottom: 2rem;
+}
+
+#explanation {
+  line-height: 1.2em;
+  padding-bottom: 2rem;
+  letter-spacing: 0.1em;
+}
+
+.fits {
+  letter-spacing: 0.1em;
+  padding-bottom: 4rem;
+}
+
+#quantity {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+#buy-button {
+  background-color: gray;
+  border: none;
+  padding: 2rem 3rem;
+  border-radius: 0.5em;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+
+#buy-button:hover {
+  background-color: darkgrey;
+}
+
+.additional-info {
+  margin-top: 10rem;
+}
+
+.additional-info h4 {
+  letter-spacing: 0.1em;
+  font-weight: 200;
+  padding-bottom: 0.5rem;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+hr {
+  margin-bottom: 2rem;
+}
+
+.additional-info p {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.additional-info p span {
+  margin-left: 1rem;
+  font-weight: 300;
+}
+
+footer {
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+}
+
+footer section {
+  padding: 2rem 0;
+  flex: 1;
+}
+
+.logo img {
+  max-width: 30%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.info,
+.contact-info {
+  text-align: left;
+  margin-left: 5rem;
+}
+
+.info h3,
+.contact-info h3 {
+  margin-bottom: 3rem;
+}
+
+.info p,
+.contact-info p {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.material-symbols-outlined {
+  vertical-align: middle;
+  margin-right: 1rem;
+}

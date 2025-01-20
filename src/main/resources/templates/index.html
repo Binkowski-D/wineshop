@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wine Shop</title>
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap"
+            rel="stylesheet"
+    />
+</head>
+
+<body>
+<nav>
+    <a th:href="@{/basket}"
+    ><span class="material-symbols-outlined"> shopping_basket </span></a
+    >
+</nav>
+<header>
+    <h1 class="header-contents">Wina gruzińskie</h1>
+    <p class="header-contents">
+        Odkryj wyjątkowe gruzińskie wina!<br />Poznaj niepowtarzalne smaki
+        Gruzji zamknięte w kieliszku!
+    </p>
+</header>
+<main>
+    <div class="first-container">
+        <section class="georgia-flag">
+            <img src="/assets/georgia.jpeg" alt="Flaga Gruzji" />
+        </section>
+        <section class="description">
+            <h2>Gruzińskie Wino – Tradycja Sięgająca Tysiącleci</h2>
+            <p>
+                Gruzińskie wino to prawdziwy skarb kultury i historii, który od
+                wieków zachwyca miłośników wina na całym świecie. Gruzja, nazywana
+                kolebką winiarstwa, może poszczycić się jedną z najstarszych
+                tradycji produkcji wina, sięgającą aż 8 tysięcy lat wstecz.
+                Archeologiczne odkrycia potwierdzają, że to właśnie w Gruzji
+                wynaleziono technikę fermentacji winogron w glinianych naczyniach
+                zwanych kwewri – metoda ta jest stosowana do dziś i została wpisana
+                na listę niematerialnego dziedzictwa kulturowego UNESCO. Unikalność
+                gruzińskich win tkwi nie tylko w starożytnej metodzie produkcji, ale
+                także w różnorodności lokalnych szczepów winogron, takich jak
+                Saperavi, Rkatsiteli czy Mtsvane. Każdy region Gruzji oferuje wina o
+                odmiennym charakterze i aromacie, które idealnie odzwierciedlają
+                bogactwo gruzińskiej ziemi i tradycji. Dzięki harmonijnemu
+                połączeniu wielowiekowej historii, unikalnych technik oraz pasji
+                winiarzy, gruzińskie wino jest nie tylko napojem, ale także
+                prawdziwą podróżą w czasie i przestrzeni, pozwalającą odkrywać smak
+                starożytności w nowoczesnym wydaniu.
+            </p>
+        </section>
+        <section class="georgia-sign">
+            <img src="/assets/georgia-sign.jpeg" alt="Herb Gruzji" />
+        </section>
+    </div>
+    <div class="search-container">
+        <h2>Idealne wino na każdą chwilę – znajdź je tutaj!</h2>
+        <div class="search-options">
+            <form method="get" th:action="@{/wines}">
+                <label for="colorSelect">Wybierz kolor: </label>
+                <select id="colorSelect" name="color">
+                    <option th:value="' '" th:selected="${color == null}"></option>
+                    <option th:value="'Białe'" th:selected="${color == 'Białe'}">Białe</option>
+                    <option th:value="'Czerwone'" th:selected="${color == 'Czerwone'}">Czerwone</option>
+                    <option th:value="'Różowe'" th:selected="${color == 'Różowe'}">Różowe</option>
+                </select>
+                <label for="flavourSelect">Wybierz smak: </label>
+                <select id="flavourSelect" name="flavour">
+                    <option th:value="' '" th:selected="${flavour == null}"></option>
+                    <option th:value="'Słodkie'" th:selected="${flavour == 'Słodkie'}">Słodkie</option>
+                    <option th:value="'Półsłodkie'" th:selected="${flavour == 'Półsłodkie'}">Półsłodkie</option>
+                    <option th:value="'Wytrawne'" th:selected="${flavour == 'Wytrawne'}">Wytrawne</option>
+                    <option th:value="'Półwytrawne'" th:selected="${flavour == 'Półwytrawne'}">Półwytrawne</option>
+                </select>
+                <label for="typeSelect">Wybierz rodzaj: </label>
+                <select id="typeSelect" name="type">
+                    <option th:value="' '" th:selected="${type == null}"></option>
+                    <option th:value="'Musujące'" th:selected="${type == 'Musujące'}">Musujące</option>
+                </select>
+                <label for="priceSelect">Wybierz cenę (PLN): </label>
+                <select id="priceSelect" name="price">
+                    <option th:value="' '" th:selected="${price == null}"></option>
+                    <option th:value="'<20'" th:selected="${price == '<20'}">&lt; 20</option>
+                    <option th:value="'20-30'" th:selected="${price == '20-30'}">20 - 30</option>
+                    <option th:value="'30-40'" th:selected="${price == '30-40'}">30 - 40</option>
+                    <option th:value="'40-50'" th:selected="${price == '40-50'}">40 - 50</option>
+                    <option th:value="'>50'" th:selected="${price == '>50'}">&gt; 50</option>
+                </select>
+
+                <button id="allWinesButton" type="submit">Szukaj</button>
+            </form>
+        </div>
+    </div>
+    <div class="wines-found">
+        <h2>Znalezione wina:</h2>
+        <div class="wines-grid">
+            <div th:if="${searched and #lists.isEmpty(wines)}">
+                <p class="no-results">Nie znaleziono win odpowiadających wybranym kryteriom.</p>
+            </div>
+            <div class="wine-card" th:each="wine : ${wines}" th:if="${!#lists.isEmpty(wines)}">
+                <img th:src="@{'/' + ${wine.imagePath}}" th:alt="${wine.name}" />
+                <p class="wine-name" th:text="${wine.name}"></p>
+                <p class="wine-price" th:text="${wine.price} + ' zł'"></p>
+                <p class="wine-sd" th:text="${wine.color + ', ' + wine.flavour}"></p>
+                <form method="get" th:action="@{/wines/{id}(id = ${wine.id})}">
+                    <button type="submit" class="details-button" th:href="@{/wines/{id}(id=${wine.id})}">Szczegóły</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</main>
+<footer>
+    <section class="logo">
+        <img src="/assets/logo.jpeg" alt="Logo firmy" />
+    </section>
+    <section class="info">
+        <h3>Informacje</h3>
+        <p>Regulamin</p>
+        <p>Polityka prywatności</p>
+    </section>
+    <section class="contact-info">
+        <h3>Kontakt</h3>
+        <p>
+            <span class="material-symbols-outlined icon">location_on</span>ul.
+            Wymyślona 50, Warszawa
+        </p>
+        <p>
+          <span class="material-symbols-outlined icon">mail</span
+          >kontakt@wineshop.pl
+        </p>
+        <p>
+            <span class="material-symbols-outlined">smartphone</span> +48 123 456
+            789
+        </p>
+    </section>
+</footer>
+</body>
+</html>
