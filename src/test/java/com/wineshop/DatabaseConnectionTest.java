@@ -21,8 +21,6 @@ public class DatabaseConnectionTest {
         try(Connection connection = dataSource.getConnection()){
             assertThat(connection).isNotNull();
             assertThat(connection.isValid(2)).isTrue();
-        }catch (SQLException ex){
-            throw new RuntimeException("Database connection failed", ex);
         }
     }
 }

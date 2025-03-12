@@ -3,6 +3,7 @@ package com.wineshop.util;
 import com.wineshop.model.*;
 import com.wineshop.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -24,6 +25,7 @@ public abstract class BaseTestSetup {
     @Autowired
     protected WineRepository wineRepository;
 
+    @Transactional
     protected void initTestData(){
 
         // Deletes all existing data before inserting test records.
@@ -32,6 +34,7 @@ public abstract class BaseTestSetup {
         flavourRepository.deleteAll();
         typeRepository.deleteAll();
         grapeRepository.deleteAll();
+
 
         // Initialize test colors
         Color red = colorRepository.save(new Color("Red"));

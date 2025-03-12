@@ -62,7 +62,6 @@ public class WineControllerTest {
         mockMvc.perform(get("/wines")
                         .param("color", "Red")
                         .param("flavour", "Dry")
-                        .param("type", (String) null)
                         .param("price", "20-30"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"))
@@ -115,8 +114,7 @@ public class WineControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("wine-details"))
                 .andExpect(model().attributeExists("errorMessage"))
-                .andExpect(model().attribute("errorMessage", "Wine not found"));;
-
+                .andExpect(model().attribute("errorMessage", "Wine not found"));
 
         verify(wineService, times(1)).findWineByIdOrThrow(999);
     }

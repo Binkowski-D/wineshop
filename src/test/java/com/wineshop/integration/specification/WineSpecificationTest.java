@@ -17,7 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest // Configures JPA tests with an in-memory database
 @ActiveProfiles("test") // Use the "test" profile for database configuration
-@Import(WineSpecification.class) // Import the WineSpecification class for testing
 public class WineSpecificationTest extends BaseTestSetup {
 
     @BeforeEach
@@ -32,7 +31,7 @@ public class WineSpecificationTest extends BaseTestSetup {
         List<Wine> result = wineRepository.findAll(specification);
 
         assertThat(result).hasSize(4); // Expect 4 wines with color "Red"
-        assertThat(result).extracting(Wine::getName)
+        assertThat(result.stream().map(Wine::getName))
                 .containsExactlyInAnyOrder("Cabernet Sauvignon", "Merlot", "Kindzmarauli", "ERA Cabernet");
     }
 
@@ -73,7 +72,7 @@ public class WineSpecificationTest extends BaseTestSetup {
         List<Wine> result = wineRepository.findAll(specification);
 
         assertThat(result).hasSize(5); // Expect 5 wines in the price range
-        assertThat(result).extracting(Wine::getName)
+        assertThat(result.stream().map(Wine::getName))
                 .containsExactlyInAnyOrder("Merlot", "Chardonnay", "Kindzmarauli", "Rkatsiteli", "ERA Cabernet");
     }
 
@@ -93,7 +92,7 @@ public class WineSpecificationTest extends BaseTestSetup {
         Specification<Wine> specification = WineSpecification.filter(null, null, null, null, null);
         List<Wine> result = wineRepository.findAll(specification);
 
-        assertThat(result).hasSize(9); // Expect all 9 wines
+        assertThat(result).hasSize((int) wineRepository.count());
     }
 
 }

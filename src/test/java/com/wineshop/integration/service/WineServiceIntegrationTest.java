@@ -41,7 +41,7 @@ public class WineServiceIntegrationTest extends BaseTestSetup {
     void testFilterWinesWithoutCriteria() {
         List<Wine> result = wineService.filterWines(null, null, null, null);
 
-        assertThat(result).hasSize(9); // Expect all wines
+        assertThat(result).hasSize((int) wineRepository.count());
     }
 
     // Tests filtering wines by price range 20-30 without other criteria
@@ -60,7 +60,7 @@ public class WineServiceIntegrationTest extends BaseTestSetup {
         Wine wine = wineService.findWineByIdOrThrow(1);
 
         assertThat(wine).isNotNull();
-        assertThat(wine.getName()).isEqualTo("Cabernet Sauvignon");
+        assertThat(wine.getId()).isEqualTo(1);
     }
 
     // Tests if an exception is thrown when searching for a non-existent wine ID

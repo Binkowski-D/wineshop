@@ -78,7 +78,7 @@ public class BasketItemServiceIntegrationTest extends BaseTestSetup {
         assertThat(items).hasSize(1);
 
         BasketItem basketItem = items.get(0);
-        assertThat(basketItem.getWine().getName()).isEqualTo("Cabernet Sauvignon");
+        assertThat(basketItem.getWine().getName()).isEqualTo(wine.getName());
         assertThat(basketItem.getQuantity()).isEqualTo(5);
         assertThat(basketItem.getPrice()).isEqualByComparingTo(BigDecimal.valueOf(400));
     }

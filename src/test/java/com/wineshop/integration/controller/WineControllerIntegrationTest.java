@@ -68,7 +68,7 @@ public class WineControllerIntegrationTest extends BaseTestSetup {
                 .andExpect(status().isOk())
                 .andExpect(view().name("wine-details"))
                 .andExpect(model().attributeExists("wine"))
-                .andExpect(model().attribute("wine", org.hamcrest.Matchers.hasProperty("name", org.hamcrest.Matchers.is("Cabernet Sauvignon"))));
+                .andExpect(model().attribute("wine", org.hamcrest.Matchers.hasProperty("name", org.hamcrest.Matchers.is(wine.getName()))));
     }
 
     // Tests if an error message is displayed when a wine ID does not exist

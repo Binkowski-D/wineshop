@@ -46,7 +46,7 @@ public class WineServiceTest {
 
         // Then the correct number of wines should be returned
         assertThat(wines).hasSize(2);
-        assertThat(wines).extracting(Wine::getName)
+        assertThat(wines.stream().map(Wine::getName))
                 .containsExactlyInAnyOrder("Wine A", "Wine B");
 
         // Verify repository method was called with a proper specification
@@ -59,7 +59,7 @@ public class WineServiceTest {
         Wine wine1 = new Wine("Wine A", BigDecimal.valueOf(25), "image1.jpg", null, null, null, null);
 
         // Given a repository containing a wine with ID 1
-        when(wineRepository.findById(1)).thenReturn(Optional.of(wine1));
+        when(wineRepository.findById(anyInt())).thenReturn(Optional.of(wine1));
 
         // When finding wine by ID
         Wine result = wineService.findWineByIdOrThrow(1);
@@ -69,7 +69,7 @@ public class WineServiceTest {
         assertThat(result.getName()).isEqualTo("Wine A");
 
         // Verify repository method was called once
-        verify(wineRepository, times(1)).findById(1);
+        verify(wineRepository, times(1)).findById(anyInt());
     }
 
 

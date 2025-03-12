@@ -44,8 +44,8 @@ public class BasketItemServiceTest {
         Integer wineId = 1;
         int quantity = 2;
 
-        Basket basket = new Basket(sessionId);
-        Wine wine = new Wine("Cabernet Sauvignon", BigDecimal.valueOf(50), "image.jpg", 750, 10, null, null);
+        Basket basket = createBasket(sessionId);
+        Wine wine = createWine("Cabernet Sauvignon", BigDecimal.valueOf(50), 10);
 
         when(basketRepository.findBySessionId(sessionId)).thenReturn(Optional.of(basket));
         when(wineRepository.findById(wineId)).thenReturn(Optional.of(wine));
@@ -59,6 +59,7 @@ public class BasketItemServiceTest {
         BasketItem savedItem = captor.getValue();
 
         assertThat(savedItem.getWine()).isEqualTo(wine);
+        assertThat(savedItem.getBasket()).isEqualTo(basket);
         assertThat(savedItem.getQuantity()).isEqualTo(2);
         assertThat(savedItem.getPrice()).isEqualByComparingTo(BigDecimal.valueOf(100));
     }
@@ -70,8 +71,8 @@ public class BasketItemServiceTest {
         Integer wineId = 1;
         int quantity = 15;
 
-        Basket basket = new Basket(sessionId);
-        Wine wine = new Wine("Cabernet Sauvignon", BigDecimal.valueOf(50), "image.jpg", 750, 10, null, null);
+        Basket basket = createBasket(sessionId);
+        Wine wine = createWine("Cabernet Sauvignon", BigDecimal.valueOf(50), 10);
 
         when(basketRepository.findBySessionId(sessionId)).thenReturn(Optional.of(basket));
         when(wineRepository.findById(wineId)).thenReturn(Optional.of(wine));
@@ -91,8 +92,8 @@ public class BasketItemServiceTest {
         String sessionId = "abc123";
         Integer wineId = 1;
 
-        Basket basket = new Basket(sessionId);
-        Wine wine = new Wine("Cabernet Sauvignon", BigDecimal.valueOf(50), "image.jpg", 750, 10, null, null);
+        Basket basket = createBasket(sessionId);
+        Wine wine = createWine("Cabernet Sauvignon", BigDecimal.valueOf(50), 10);
         BasketItem basketItem = new BasketItem(wine, 2, BigDecimal.valueOf(100));
         basketItem.setBasket(basket);
 
@@ -111,8 +112,8 @@ public class BasketItemServiceTest {
         String sessionId = "abc123";
         Integer wineId = 1;
 
-        Basket basket = new Basket(sessionId);
-        Wine wine = new Wine("Cabernet Sauvignon", BigDecimal.valueOf(50), "image.jpg", 750, 10, null, null);
+        Basket basket = createBasket(sessionId);
+        Wine wine = createWine("Cabernet Sauvignon", BigDecimal.valueOf(50), 10);
 
         when(basketRepository.findBySessionId(sessionId)).thenReturn(Optional.of(basket));
         when(wineRepository.findById(1)).thenReturn(Optional.of(wine));
@@ -132,8 +133,8 @@ public class BasketItemServiceTest {
         Integer wineId = 1;
         int newQuantity = 3;
 
-        Basket basket = new Basket(sessionId);
-        Wine wine = new Wine("Cabernet Sauvignon", BigDecimal.valueOf(50), "image.jpg", 750, 10, null, null);
+        Basket basket = createBasket(sessionId);
+        Wine wine = createWine("Cabernet Sauvignon", BigDecimal.valueOf(50), 10);
         BasketItem basketItem = new BasketItem(wine, 2, BigDecimal.valueOf(100));
         basketItem.setBasket(basket);
 
@@ -148,6 +149,8 @@ public class BasketItemServiceTest {
 
         BasketItem updatedItem = captor.getValue();
 
+        assertThat(updatedItem.getWine()).isEqualTo(wine);
+        assertThat(updatedItem.getBasket()).isEqualTo(basket);
         assertThat(updatedItem.getQuantity()).isEqualTo(3);
         assertThat(updatedItem.getPrice()).isEqualByComparingTo(BigDecimal.valueOf(150));
     }
@@ -156,7 +159,7 @@ public class BasketItemServiceTest {
     @Test
     void shouldRetrieveBasketItems() {
         String sessionId = "abc123";
-        Basket basket = new Basket(sessionId);
+        Basket basket = createBasket(sessionId);
 
         BasketItem item1 = new BasketItem(new Wine("Wine A", BigDecimal.valueOf(30), "image1.jpg", 750, 10, null, null), 2, BigDecimal.valueOf(60));
         BasketItem item2 = new BasketItem(new Wine("Wine B", BigDecimal.valueOf(40), "image2.jpg", 750, 8, null, null), 1, BigDecimal.valueOf(40));
@@ -166,5 +169,13 @@ public class BasketItemServiceTest {
 
         List<BasketItem> items = basketItemService.getBasketItems(sessionId);
         assertThat(items).hasSize(2).containsExactlyInAnyOrder(item1, item2);
+    }
+
+    private Basket createBasket(String sessionId) {
+        return new Basket(sessionId);
+    }
+
+    private Wine createWine(String name, BigDecimal price, int stock) {
+        return new Wine(name, price, "image.jpg", 750, stock, null, null);
     }
 }

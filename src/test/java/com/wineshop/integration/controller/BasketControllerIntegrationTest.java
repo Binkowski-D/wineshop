@@ -115,7 +115,7 @@ public class BasketControllerIntegrationTest extends BaseTestSetup {
 
         List<BasketItem> items = basketItemRepository.findAll();
         assertThat(items).hasSize(1);
-        assertThat(items.get(0).getQuantity()).isEqualTo(3);
+        assertThat(items).extracting(BasketItem::getQuantity).containsExactly(3);
 
     }
 
@@ -147,6 +147,7 @@ public class BasketControllerIntegrationTest extends BaseTestSetup {
                 .param("wineId", String.valueOf(secondWine.getId())).sessionAttr("sessionId", "abc123"));
 
         mockMvc.perform(get("/basket").sessionAttr("sessionId", "abc123"))
+                .andExpect(status().isOk())
                 .andExpect(model().attribute("totalCost", wine.getPrice().add(secondWine.getPrice())));
     }
 
@@ -156,6 +157,8 @@ public class BasketControllerIntegrationTest extends BaseTestSetup {
         mockMvc.perform(post("/basket/add")
                         .param("wineId", "99999") // Non-existent ID
                         .sessionAttr("sessionId", "abc123"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("wine-details"))
                 .andExpect(model().attributeExists("errorMessage"));
 
     }

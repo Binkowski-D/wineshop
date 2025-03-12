@@ -60,6 +60,10 @@ public class BasketServiceIntegrationTest {
         basketService.updateSessionId(oldSessionId, newSessionId);
 
         assertThat(basketRepository.findBySessionId(oldSessionId)).isEmpty();
-        assertThat(basketRepository.findBySessionId(newSessionId)).isPresent();
+        assertThat(basketRepository.findBySessionId(newSessionId))
+                .get()
+                .extracting(Basket::getId)
+                .isEqualTo(basket.getId());
+
     }
 }
